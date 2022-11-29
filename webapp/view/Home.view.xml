@@ -1,0 +1,28 @@
+<mvc:View 
+	controllerName="uploadfile.controller.Home" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true" 
+	xmlns:l="sap.ui.layout" 
+	xmlns:u="sap.ui.unified" 
+	xmlns="sap.m">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <l:VerticalLayout>
+                            <u:FileUploader
+								id="fileUploader" 
+								name="myFileUpload" 
+								useMultipart="false"
+								uploadUrl="/sap/opu/odata/sap/YBTP_UPLOAD_FILE_SRV/FileSet" 
+								tooltip="Upload your file to the local server" 
+								uploadComplete="handleUploadComplete" />
+                            <Button text="Upload File" press="handleUploadPress" />
+                        </l:VerticalLayout>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
