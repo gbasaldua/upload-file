@@ -14,14 +14,16 @@ sap.ui.define([
 			},
 
 			handleUploadComplete: function (oEvent) {
-				var sResponse = oEvent.getParameter("response"),
-					//iHttpStatusCode = parseInt(/\d{3}/.exec(sResponse)[0]),
-					iHttpStatusCode = parseInt(sResponse),
-					sMessage;
+				const sStatus = oEvent.getParameter("status");
+				var sResponse = oEvent.getParameter("responseRaw");
 
-				if (sResponse) {
-					sMessage = iHttpStatusCode === 200 ? sResponse + " (Upload Success)" : sResponse + " (Upload Error)";
-					MessageToast.show(sMessage);
+				
+				if (sStatus === 201) {
+					MessageToast.show('Upload Completado');
+				} else {
+					const errorPost = jQuery.parseXML(sResponse).querySelector("errordetails").querySelector("message").textContent;
+					const errorMsg = 'Error: ' + errorPost;
+					MessageToast.show(errorMsg);
 				}
 			},
 
@@ -51,7 +53,7 @@ sap.ui.define([
 				headerParma3.setValue('1500000001');
 				oFileUploader.addHeaderParameter(headerParma3);
 
-				
+
 				oFileUploader.checkFileReadable().then(function () {
 					oFileUploader.upload();
 					oFileUploader.destroyHeaderParameters();
